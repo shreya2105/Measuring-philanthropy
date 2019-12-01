@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Mar 15 11:11:22 2018
+
+@author: shreyaagarwal
+"""
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+from bs4 import BeautifulSoup as bs
+
+driver = webdriver.Safari()
+#wait = WebDriverWait(driver, 1)
+driver.get("http://www.incometaxindia.gov.in/Pages/utilities/exempted-institutions.aspx")
+html = driver.page_source
+soup = bs(html, 'lxml')
+
+name = (soup.find_all("div", class_= "fc-blue fquph"))
+pancard = (soup.find_all("span", class_="pan-id"))
+for n,p in zip (name, pancard):
+    print (n.text.replace(p.text,""),p.text) 
+    
+
+#details = driver.find_elements_by_class_name("exempted-detail")
